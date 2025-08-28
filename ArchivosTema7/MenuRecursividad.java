@@ -1,8 +1,7 @@
 import java.util.Scanner;
 
 public class MenuRecursividadCompleto {
-    
-    // Métodos para factorial
+
     public static long factorial(long n) {
         return n <= 1 ? 1 : n * factorial(n - 1);
     }
@@ -18,7 +17,6 @@ public class MenuRecursividadCompleto {
         }
     }
 
-    // Métodos para Fibonacci
     public static long fibonacci(long n) {
         return n <= 1 ? n : fibonacci(n - 1) + fibonacci(n - 2);
     }
@@ -34,7 +32,6 @@ public class MenuRecursividadCompleto {
         }
     }
 
-    // Métodos para suma de dígitos
     public static int sumaDigitos(int numero) {
         return numero < 10 ? numero : (numero % 10) + sumaDigitos(numero / 10);
     }
@@ -43,10 +40,10 @@ public class MenuRecursividadCompleto {
         Scanner scanner = new Scanner(System.in);
         System.out.println("\n=== SUMA DE DÍGITOS ===");
         System.out.print("Ingrese un número entero positivo: ");
-        
+
         if (scanner.hasNextInt()) {
             int numero = scanner.nextInt();
-            
+
             if (numero < 0) {
                 System.out.println("Error: El número debe ser positivo.");
             } else {
@@ -59,25 +56,23 @@ public class MenuRecursividadCompleto {
         }
     }
 
-    // Métodos para inversión de cadena (CORREGIDO)
     public static String invertirCadena(String cadena) {
         if (cadena == null || cadena.length() <= 1) {
             return cadena;
         }
-        return cadena.charAt(cadena.length() - 1) + 
-               invertirCadena(cadena.substring(0, cadena.length() - 1));
+        return cadena.charAt(cadena.length() - 1) +
+                invertirCadena(cadena.substring(0, cadena.length() - 1));
     }
 
     public static void ejecutarInversionCadena() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("\n=== INVERSIÓN DE CADENA ===");
         System.out.print("Ingresa una cadena de texto: ");
-        
-        // Limpiar el buffer del scanner antes de leer la cadena
-        scanner.nextLine(); // Consumir el salto de línea pendiente
-        
+
+        scanner.nextLine();
+
         String texto = scanner.nextLine();
-        
+
         if (texto.isEmpty()) {
             System.out.println("Error: No se ingresó ninguna cadena.");
         } else {
@@ -87,14 +82,48 @@ public class MenuRecursividadCompleto {
         }
     }
 
-    // Menú principal con recursión
+    public static int contarVocales(String cadena) {
+        if (cadena == null || cadena.isEmpty()) {
+            return 0;
+        }
+
+        char primerCaracter = Character.toLowerCase(cadena.charAt(0));
+
+        boolean esVocal = (primerCaracter == 'a' || primerCaracter == 'e' ||
+                primerCaracter == 'i' || primerCaracter == 'o' ||
+                primerCaracter == 'u');
+
+        int conteoRestante = contarVocales(cadena.substring(1));
+
+        return (esVocal ? 1 : 0) + conteoRestante;
+    }
+
+    public static void ejecutarConteoVocales() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("\n=== CONTEO DE VOCALES ===");
+        System.out.print("Ingresa una cadena de texto: ");
+
+        scanner.nextLine();
+
+        String texto = scanner.nextLine();
+
+        if (texto.isEmpty()) {
+            System.out.println("Error: No se ingresó ninguna cadena.");
+        } else {
+            int cantidadVocales = contarVocales(texto);
+            System.out.println("Texto: " + texto);
+            System.out.println("Cantidad de vocales: " + cantidadVocales);
+        }
+    }
+
     public static void mostrarMenu(Scanner scanner) {
         System.out.println("\n=== MENÚ DE RECURSIVIDAD ===");
         System.out.println("1. Calcular factorial");
         System.out.println("2. Calcular número de Fibonacci");
         System.out.println("3. Sumar dígitos");
         System.out.println("4. Inversión de cadena");
-        System.out.println("5. Salir");
+        System.out.println("5. Conteo de vocales");
+        System.out.println("6. Salir");
         System.out.print("Seleccione una opción: ");
 
         if (scanner.hasNextInt()) {
@@ -126,10 +155,14 @@ public class MenuRecursividadCompleto {
                 mostrarMenu(scanner);
                 break;
             case 5:
+                ejecutarConteoVocales();
+                mostrarMenu(scanner);
+                break;
+            case 6:
                 System.out.println("¡Hasta luego!");
                 break;
             default:
-                System.out.println("Opción no válida. Por favor, seleccione 1, 2, 3, 4 o 5.");
+                System.out.println("Opción no válida. Por favor, seleccione 1, 2, 3, 4, 5 o 6.");
                 mostrarMenu(scanner);
                 break;
         }
